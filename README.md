@@ -1,3 +1,20 @@
+# Assignment solution
+
+Problem
+---
+
+Build a rate limiter to limit requests per minute for a user
+
+Solution
+---
+
+Let's use an incrementing pointer and expiring keys to keep track of the number of requests a user is sending per minute
+
+* Lets use `INCR <userid>:<minute_level_timestamp>` every time the user sends the request
+* Also while creating this key for the first time, let's put an expiry on this key at <minute_level_timestamp + 1>
+* Whenever the user sends a request, you can check the value of this key to infer how many requests the user has sent. If the requests have reached 10, you can take necessary actions.
+* The memory won't be an issue as at any time for any user a single key is present, because whenever a new minute begins the previous minute's key expires. So, in the worst case, the memory will be `O(users)`, where `users` are the number of users sending requests. 
+
 # RediSolar for Java
 
 Introduction
